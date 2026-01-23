@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudyBuddy - Create Account</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.4s;
+    }
+
+    body.dark {
+      background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
+      color: #e2e8f0;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      max-width: 980px;
+      margin: 20px;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    }
+
+    body.dark .container {
+      background: #1e293b;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+
+    /* Left side - Branding */
+    .left {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 60px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    body.dark .left {
+      background: linear-gradient(135deg, #1e293b 0%, #312e81 100%);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo span { font-size: 36px; }
+
+    .tagline {
+      font-size: 20px;
+      opacity: 0.92;
+      margin-bottom: 48px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 20px 28px;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    body.dark .stat-card {
+      background: rgba(30,41,59,0.6);
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .stat-text {
+      font-size: 15px;
+      opacity: 0.9;
+    }
+
+    .join {
+      margin-top: 40px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      font-size: 15px;
+      backdrop-filter: blur(6px);
+    }
+
+    body.dark .join {
+      background: rgba(30,41,59,0.5);
+    }
+
+    .join strong { font-weight: 700; }
+
+    /* Right side - Form */
+    .right {
+      flex: 1.1;
+      padding: 60px 48px;
+      background: white;
+    }
+
+    body.dark .right {
+      background: #0f172a;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #1e293b;
+    }
+
+    body.dark h1 { color: #e2e8f0; }
+
+    .subtitle {
+      color: #64748b;
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+
+    body.dark .subtitle { color: #94a3b8; }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #334155;
+      font-size: 14px;
+    }
+
+    body.dark label { color: #cbd5e1; }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+
+    body.dark input {
+      background: #1e293b;
+      border-color: #334155;
+      color: #e2e8f0;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #7c3aed;
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    body.dark .toggle-password { color: #94a3b8; }
+
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 24px 0;
+      font-size: 14px;
+      color: #475569;
+    }
+
+    body.dark .terms { color: #cbd5e1; }
+
+    .terms a {
+      color: #7c3aed;
+      text-decoration: none;
+    }
+
+    .terms a:hover { text-decoration: underline; }
+
+    .btn-create {
+      width: 100%;
+      padding: 16px;
+      background: #7c3aed;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-create:hover {
+      background: #6d28d9;
+      transform: translateY(-1px);
+    }
+
+    .btn-create:active { transform: translateY(0); }
+
+    .signin-link {
+      text-align: center;
+      margin-top: 32px;
+      font-size: 15px;
+      color: #64748b;
+    }
+
+    body.dark .signin-link { color: #94a3b8; }
+
+    .signin-link a {
+      color: #7c3aed;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    body.dark .theme-toggle {
+      background: rgba(30,41,59,0.6);
+    }
+
+    @media (max-width: 860px) {
+      .container { flex-direction: column; }
+      .left { padding: 48px 32px; }
+      .right { padding: 40px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+
+  <div class="container">
+    <!-- Left - Branding -->
+    <div class="left">
+      <div>
+        <div class="logo">
+          <span>📖</span> StudyBuddy
+        </div>
+        <div class="tagline">Your AI-Powered Learning Companion</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">2M+</div>
+          <div class="stat-text">Flashcards Created</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">500K+</div>
+          <div class="stat-text">Quizzes Completed</div>
+        </div>
+      </div>
+
+      <div class="join">
+        <strong>Join 50,000+ students</strong><br>
+        Learning smarter every day
+      </div>
+    </div>
+
+    <!-- Right - Form -->
+    <div class="right">
+      <h1>Create your account</h1>
+      <div class="subtitle">Start your learning journey today</div>
+
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="fullname">Full name</label>
+          <input type="text" id="fullname" placeholder="John Doe" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="password" placeholder="••••••••" required minlength="8" />
+            <button type="button" class="toggle-password" id="togglePass">👁️</button>
+          </div>
+        </div>
+
+        <div class="terms">
+          <input type="checkbox" id="terms" required />
+          <label for="terms">
+            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" class="btn-create">Create account</button>
+      </form>
+
+      <div class="signin-link">
+        Already have an account? <a href="index.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      themeToggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+    });
+
+    // Password visibility
+    const togglePass = document.getElementById('togglePass');
+    const passwordInput = document.getElementById('password');
+
+    togglePass.addEventListener('click', () => {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      togglePass.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    // Form submit → redirect simulation
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('fullname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const pass = document.getElementById('password').value;
+      const terms = document.getElementById('terms').checked;
+
+      if (!name || !email || pass.length < 8 || !terms) {
+        alert("Please fill all fields correctly.\nPassword must be at least 8 characters.");
+        return;
+      }
+
+      // In real app → send to backend
+      // For demo → save "logged in" flag and redirect to dashboard
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userName', name.split(' ')[0]); // optional
+
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+</body>
+</html>
