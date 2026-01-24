@@ -1,0 +1,359 @@
+/* ===========================
+   StudyBuddy Dashboard CSS
+   =========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+:root {
+  --bg: #0f172a;
+  --panel: #172033;
+  --panel2: #1d2a42;
+  --sidebar: #121a2a;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --text: #e8eefc;
+  --muted: rgba(232, 238, 252, 0.6);
+
+  --accent: #6f7dff;
+  --accent2: #7c4dff;
+}
+
+body {
+  background: #f5f7fa;
+  color: #111;
+}
+
+/* DARK THEME like screenshot */
+body.dark {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ===========================
+   Sidebar
+   =========================== */
+.sidebar {
+  width: 270px;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 18px 14px;
+  background: rgba(18, 26, 42, 0.95);
+  border-right: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px 18px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #6f7dff, #7c4dff);
+}
+
+.brand-text {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  transition: 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateX(4px);
+  color: var(--text);
+}
+
+.nav-item.active {
+  background: rgba(111, 125, 255, 0.16);
+  border: 1px solid rgba(111, 125, 255, 0.22);
+  color: var(--text);
+}
+
+.nav-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-line {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 10px;
+}
+
+.toggle-btn {
+  width: 100%;
+  border: none;
+  background: none;
+}
+
+/* ===========================
+   Main content
+   =========================== */
+.main {
+  margin-left: 270px;
+  width: calc(100% - 270px);
+  padding: 30px 36px;
+}
+
+/* ===========================
+   Topbar
+   =========================== */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.page-title {
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search {
+  width: 420px;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0 16px;
+  outline: none;
+  color: var(--text);
+}
+
+.search::placeholder {
+  color: rgba(232, 238, 252, 0.4);
+}
+
+.icon-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: #ff4d4d;
+  color: white;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: linear-gradient(135deg, #6f7dff, #7c4dff);
+}
+
+.profile-text .name {
+  font-weight: 700;
+}
+.profile-text .role {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===========================
+   Cards
+   =========================== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-title {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stat-value {
+  font-size: 30px;
+  font-weight: 900;
+  margin-top: 14px;
+}
+
+.stat-sub {
+  margin-top: 6px;
+  color: rgba(232, 238, 252, 0.45);
+  font-size: 13px;
+}
+
+.chip {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.chip.green { color: #47ffb8; }
+.chip.blue { color: #6f7dff; }
+.chip.purple { color: #b56bff; }
+.chip.orange { color: #ffb84d; }
+
+/* ===========================
+   Section
+   =========================== */
+.section {
+  margin-top: 28px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.btn-secondary {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.activity {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.activity-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+}
+
+.activity-title {
+  font-weight: 700;
+}
+.activity-time {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ===========================
+   Floating Chat Button
+   =========================== */
+.chat-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 26px;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-size: 26px;
+  background: linear-gradient(135deg, #6f7dff, #7c4dff);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
