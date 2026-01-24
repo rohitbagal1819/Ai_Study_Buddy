@@ -57,6 +57,11 @@
             transition: background 0.3s, border-color 0.3s;
         }
 
+        /* Toggle styles */
+        .sidebar.hidden { width: 0; padding: 0; overflow: hidden; border-right: none; }
+        .main-content.full-width { margin-left: 0; }
+        #toggle-sidebar { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-primary); }
+
         .logo {
             display: flex;
             align-items: center;
@@ -139,6 +144,12 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 40px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .header-title {
@@ -430,31 +441,24 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            transition: all 0.3s ease;
         }
-
-        .stat-card:hover .stat-icon {
-            transform: rotate(10deg) scale(1.1);
-        }
-
-        .icon-blue { background: #ebf4ff; color: #3182ce; }
-        .icon-purple { background: #faf5ff; color: #805ad5; }
-        .icon-orange { background: #fff5eb; color: #dd6b20; }
-        .icon-green { background: #f0fff4; color: #38a169; }
 
         .stat-value {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 8px;
         }
 
         .stat-change {
-            font-size: 13px;
+            font-size: 14px;
             color: #48bb78;
             display: flex;
             align-items: center;
             gap: 4px;
+        }
+
+        .stat-change.negative {
+            color: #f56565;
         }
 
         /* Quick Actions */
@@ -477,39 +481,37 @@
 
         .action-card {
             background: var(--bg-secondary);
-            padding: 30px;
+            padding: 24px;
             border-radius: 16px;
-            border: 2px dashed var(--border-color);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
         }
 
         .action-card:hover {
-            border-color: var(--accent-color);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
             transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
         }
 
         .action-icon {
             width: 60px;
             height: 60px;
-            border-radius: 14px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
-            transition: all 0.3s ease;
+            margin: 0 auto 16px;
         }
 
-        .action-card:hover .action-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
+        .icon-blue { background: rgba(102, 126, 234, 0.1); color: #667eea; }
+        .icon-purple { background: rgba(128, 90, 213, 0.1); color: #805ad5; }
+        .icon-orange { background: rgba(246, 173, 85, 0.1); color: #f6ad55; }
+        .icon-green { background: rgba(72, 187, 120, 0.1); color: #48bb78; }
 
         .action-label {
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
         }
@@ -518,12 +520,12 @@
         .bottom-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 20px;
         }
 
         .section-card {
             background: var(--bg-secondary);
-            padding: 30px;
+            padding: 24px;
             border-radius: 16px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
@@ -537,39 +539,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .view-all {
-            color: var(--accent-color);
-            font-weight: 600;
             font-size: 14px;
+            color: var(--accent-color);
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .view-all:hover {
             transform: translateX(5px);
         }
 
+        /* Quiz Items */
         .quiz-item {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            padding: 20px;
-            background: var(--bg-tertiary);
+            align-items: center;
+            padding: 16px;
             border-radius: 12px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             cursor: pointer;
         }
 
         .quiz-item:hover {
+            background: var(--bg-tertiary);
             transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .quiz-left {
@@ -588,7 +585,11 @@
             font-size: 24px;
         }
 
+        .icon-green { background: rgba(72, 187, 120, 0.1); color: #48bb78; }
+        .icon-orange { background: rgba(246, 173, 85, 0.1); color: #f6ad55; }
+
         .quiz-info h4 {
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
@@ -604,9 +605,9 @@
         }
 
         .score-value {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 600;
+            color: #48bb78;
         }
 
         .score-detail {
@@ -615,37 +616,35 @@
         }
 
         .start-btn {
+            padding: 8px 20px;
             background: var(--accent-color);
             color: white;
-            padding: 10px 24px;
             border: none;
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
 
         .start-btn:hover {
             background: var(--accent-hover);
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
         }
 
+        /* Review Items */
         .review-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            background: var(--bg-tertiary);
+            gap: 16px;
+            padding: 16px;
             border-radius: 12px;
-            margin-bottom: 12px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             cursor: pointer;
         }
 
         .review-item:hover {
+            background: var(--bg-tertiary);
             transform: translateX(5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .review-left {
@@ -658,16 +657,17 @@
         .review-icon {
             width: 50px;
             height: 50px;
-            background: #faf5ff;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #805ad5;
             font-size: 24px;
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
         }
 
         .review-info h4 {
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 4px;
@@ -680,30 +680,28 @@
 
         .review-progress {
             flex: 1;
-            margin: 0 20px;
         }
 
         .progress-bar {
-            width: 100%;
             height: 8px;
             background: var(--border-color);
-            border-radius: 10px;
+            border-radius: 4px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
+            background: var(--accent-color);
             transition: width 0.3s;
         }
 
         .review-time {
-            font-weight: 600;
-            color: #dd6b20;
             font-size: 14px;
+            color: var(--text-secondary);
+            white-space: nowrap;
         }
 
+        /* Chat Button */
         .chat-button {
             position: fixed;
             bottom: 30px;
@@ -715,150 +713,64 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
             font-size: 28px;
+            color: white;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s;
         }
 
         .chat-button:hover {
-            transform: scale(1.15);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+            transform: scale(1.1);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
         }
 
         .online-indicator {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: -4px;
+            right: -4px;
             width: 16px;
             height: 16px;
             background: #48bb78;
-            border: 3px solid white;
             border-radius: 50%;
+            border: 3px solid white;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <div class="logo">
-                <div class="logo-icon">📚</div>
-                <div class="logo-text">StudyBuddy</div>
-            </div>
-            
-            <a href="#" class="nav-item active">
-                <span class="nav-icon">📊</span>
-                Dashboard
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📝</span>
-                Notes
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📤</span>
-                File Upload
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">❓</span>
-                Quizzes
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🃏</span>
-                Flashcards
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">📈</span>
-                Analytics
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">👥</span>
-                Study Groups
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🤖</span>
-                AI Assistant
-            </a>
-            
-            <div class="nav-divider"></div>
-            
-            <a href="#" class="nav-item">
-                <span class="nav-icon">❔</span>
-                Help
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">🌙</span>
-                <span id="darkModeText">Dark Mode</span>
-            </a>
-            <a href="#" class="nav-item">
-                <span class="nav-icon">⚙️</span>
-                Settings
-            </a>
-            
-            <div class="nav-divider"></div>
-            
-            <a href="#" class="nav-item logout">
-                <span class="nav-icon">🚪</span>
-                Logout
-            </a>
-        </div>
+        <!-- Sidebar container (loaded dynamically) -->
+        <div id="sidebar"></div>
 
-        <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
             <div class="header">
-                <div class="header-title">Dashboard</div>
+                <div class="header-left">
+                    <button id="toggle-sidebar">☰</button>
+                    <div class="header-title">Dashboard</div>
+                </div>
                 <div class="header-right">
-                    <input type="text" class="search-bar" placeholder="Search notes, flashcards, quizzes...">
-                    <div class="notification-icon">
-                        🔔
-                        <span class="notification-badge">2</span>
-                    </div>
+                    <input type="text" class="search-bar" placeholder="Search...">
+                    <div class="notification-icon">🔔<div class="notification-badge">2</div></div>
                     <div class="user-profile" id="userProfile">
-                        <div class="user-avatar">J</div>
+                        <div class="user-avatar">JD</div>
                         <div class="user-info">
                             <div class="user-name">John Doe</div>
                             <div class="user-role">Student</div>
                         </div>
-                        
                         <!-- Profile Popup -->
                         <div class="profile-popup" id="profilePopup">
                             <div class="profile-popup-header">
-                                <div class="profile-popup-avatar">J</div>
+                                <div class="profile-popup-avatar">JD</div>
                                 <div class="profile-popup-info">
                                     <h3>John Doe</h3>
-                                    <p>john.doe@email.com</p>
+                                    <p>Student</p>
                                 </div>
                             </div>
-                            
-                            <div class="profile-popup-item">
-                                <span>👤</span>
-                                <span>My Profile</span>
-                            </div>
-                            <div class="profile-popup-item">
-                                <span>⚙️</span>
-                                <span>Settings</span>
-                            </div>
-                            <div class="profile-popup-item">
-                                <span>📊</span>
-                                <span>My Progress</span>
-                            </div>
-                            <div class="profile-popup-item">
-                                <span>🎯</span>
-                                <span>Goals</span>
-                            </div>
-                            
+                            <div class="profile-popup-item"><span>⚙️</span>Settings</div>
+                            <div class="profile-popup-item"><span>📊</span>My Progress</div>
+                            <div class="profile-popup-item"><span>🎯</span>Goals</div>
                             <div class="profile-popup-divider"></div>
-                            
-                            <div class="profile-popup-item">
-                                <span>❔</span>
-                                <span>Help & Support</span>
-                            </div>
-                            <div class="profile-popup-item logout">
-                                <span>🚪</span>
-                                <span>Logout</span>
-                            </div>
+                            <div class="profile-popup-item logout"><span>🚪</span>Logout</div>
                         </div>
                     </div>
                 </div>
@@ -868,59 +780,48 @@
             <div class="welcome-section">
                 <div class="welcome-header">
                     <div class="welcome-text">
-                        <h1>Welcome back, John! 👋</h1>
-                        <p>You're on a 7-day study streak. Keep it up!</p>
+                        <h1>Welcome back, John!</h1>
+                        <p>Let's continue your learning journey</p>
                     </div>
                     <div class="streak-badge">
-                        ⚡ 7 Day Streak
+                        <span>🔥</span> 7 day streak
                     </div>
                 </div>
             </div>
 
-            <!-- Stats Grid -->
+            <!-- Stats Cards -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Total Notes</div>
-                            <div class="stat-value">24</div>
-                            <div class="stat-change">↗ +3 this week</div>
-                        </div>
-                        <div class="stat-icon icon-blue">📄</div>
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-change">+12%</div>
                     </div>
+                    <div class="stat-label">Overall Progress</div>
+                    <div class="stat-value">68%</div>
                 </div>
-
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Flashcard Decks</div>
-                            <div class="stat-value">12</div>
-                            <div class="stat-change">↗ +2 this week</div>
-                        </div>
-                        <div class="stat-icon icon-purple">📚</div>
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-change negative">-3</div>
                     </div>
+                    <div class="stat-label">Active Goals</div>
+                    <div class="stat-value">5</div>
                 </div>
-
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Pending Reviews</div>
-                            <div class="stat-value">45</div>
-                            <div class="stat-change">↗ 8 due today</div>
-                        </div>
-                        <div class="stat-icon icon-orange">🕐</div>
+                        <div class="stat-icon">📚</div>
+                        <div class="stat-change">+24</div>
                     </div>
+                    <div class="stat-label">Study Hours</div>
+                    <div class="stat-value">156</div>
                 </div>
-
                 <div class="stat-card">
                     <div class="stat-header">
-                        <div>
-                            <div class="stat-label">Quiz Score Avg</div>
-                            <div class="stat-value">87%</div>
-                            <div class="stat-change">↗ +5% improvement</div>
-                        </div>
-                        <div class="stat-icon icon-green">🏆</div>
+                        <div class="stat-icon">🏆</div>
+                        <div class="stat-change">+2</div>
                     </div>
+                    <div class="stat-label">Achievements</div>
+                    <div class="stat-value">12</div>
                 </div>
             </div>
 
@@ -1062,6 +963,50 @@
     </div>
 
     <script>
+        // Load sidebar dynamically
+        fetch('sidebar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('sidebar').innerHTML = data;
+                initSidebar(); // Initialize after loading
+            });
+
+        function initSidebar() {
+            // Set active nav based on current page
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if (item.getAttribute('href') === currentPage) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Dark Mode Toggle (with persistence)
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const darkModeText = document.getElementById('darkModeText');
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeText.textContent = 'Light Mode';
+                darkModeBtn.querySelector('.nav-icon').textContent = '☀️';
+            }
+            darkModeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                darkModeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+                darkModeBtn.querySelector('.nav-icon').textContent = isDark ? '☀️' : '🌙';
+                localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            });
+
+            // Other sidebar scripts (e.g., logout)
+            document.querySelector('.logout').addEventListener('click', () => alert('Logging out...'));
+        }
+
+        // Sidebar Toggle
+        document.getElementById('toggle-sidebar').addEventListener('click', () => {
+            document.querySelector('.sidebar').classList.toggle('hidden');
+            document.querySelector('.main-content').classList.toggle('full-width');
+        });
+
         // Navigation active state
         document.querySelectorAll('.nav-item').forEach(item => {
             item.addEventListener('click', function(e) {
@@ -1075,26 +1020,7 @@
             });
         });
 
-        // Dark Mode Toggle
-        const darkModeToggle = document.querySelector('.nav-item:has(#darkModeText)');
-        const darkModeText = document.getElementById('darkModeText');
-        let isDarkMode = false;
-
-        darkModeToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark-mode');
-            
-            if (isDarkMode) {
-                darkModeText.textContent = 'Light Mode';
-                darkModeToggle.querySelector('.nav-icon').textContent = '☀️';
-            } else {
-                darkModeText.textContent = 'Dark Mode';
-                darkModeToggle.querySelector('.nav-icon').textContent = '🌙';
-            }
-        });
-
-        // Profile Popup Toggle
+        // Profile Popup
         const userProfile = document.getElementById('userProfile');
         const profilePopup = document.getElementById('profilePopup');
 
