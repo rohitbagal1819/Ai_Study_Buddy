@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy - Flashcards</title>
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-primary: #f5f7fa;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f7fafc;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --border-color: #e2e8f0;
+            --accent-color: #667eea;
+            --accent-hover: #5568d3;
+            --sidebar-width: 280px;
+        }
+
+        body.dark-mode {
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #4a5568;
+            --text-primary: #f7fafc;
+            --text-secondary: #cbd5e0;
+            --border-color: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-100%);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 20px 30px;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .nav-item.active {
+            background: var(--bg-tertiary);
+            color: var(--accent-color);
+            border-left-color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            width: 24px;
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: var(--border-color);
+            margin: 15px 20px;
+        }
+
+        .nav-item.logout {
+            color: #e53e3e;
+        }
+
+        /* Overlay for mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            width: calc(100% - var(--sidebar-width));
+            transition: all 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Menu Toggle Button */
+        .menu-toggle {
+            display: none;
+            background: var(--bg-tertiary);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background: var(--border-color);
+            transform: scale(1.1);
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-secondary);
+            padding: 30px 40px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            width: 400px;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .notification-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .notification-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e53e3e;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 12px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .user-profile:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .user-role {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .profile-popup {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 280px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+        }
+
+        .profile-popup.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .profile-popup-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .profile-popup-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(5px);
+        }
+
+        /* Content Area */
+        .content-area {
+            padding: 30px 40px;
+            background: var(--bg-primary);
+        }
+
+        /* Flashcard Controls */
+        .deck-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .deck-search {
+            flex: 1;
+            max-width: 500px;
+            padding: 12px 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .deck-search:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .controls-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .create-deck-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .create-deck-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .stat-icon.blue { background: #e3f2fd; }
+        .stat-icon.purple { background: #f3e5f5; }
+        .stat-icon.orange { background: #fff3e0; }
+        .stat-icon.green { background: #e8f5e9; }
+
+        .stat-info h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-info p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Deck Cards */
+        .decks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .deck-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .deck-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+        }
+
+        .deck-header {
+            height: 8px;
+        }
+
+        .deck-header.blue { background: linear-gradient(90deg, #2196F3, #1976D2); }
+        .deck-header.purple { background: linear-gradient(90deg, #9C27B0, #7B1FA2); }
+        .deck-header.green { background: linear-gradient(90deg, #4CAF50, #388E3C); }
+        .deck-header.orange { background: linear-gradient(90deg, #FF9800, #F57C00); }
+        .deck-header.pink { background: linear-gradient(90deg, #E91E63, #C2185B); }
+
+        .deck-body {
+            padding: 24px;
+        }
+
+        .deck-subject {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .deck-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .deck-progress {
+            margin-bottom: 16px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        .deck-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .deck-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .study-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .study-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Create Deck Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .create-deck-modal {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .create-deck-modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .close-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: #e53e3e;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 15px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 12px;
+        }
+
+        .color-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: var(--text-primary);
+            transform: scale(1.15);
+        }
+
+        .color-blue { background: #2196F3; }
+        .color-purple { background: #9C27B0; }
+        .color-green { background: #4CAF50; }
+        .color-orange { background: #FF9800; }
+        .color-pink { background: #E91E63; }
+        .color-red { background: #F44336; }
+        .color-teal { background: #009688; }
+        .color-indigo { background: #3F51B5; }
+
+        .add-card-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .add-card-btn:hover {
+            background: var(--border-color);
+        }
+
+        .card-item {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .card-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .remove-card-btn {
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .remove-card-btn:hover {
+            color: #e53e3e;
+        }
+
+        .card-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .cancel-btn {
+            padding: 12px 24px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cancel-btn:hover {
+            background: var(--border-color);
+        }
+
+        .submit-btn {
+            padding: 12px 24px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Viewer Page */
+        .viewer-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg-primary);
+            z-index: 3000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .viewer-page.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .viewer-header {
+            background: var(--bg-secondary);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .viewer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .exit-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .exit-btn:hover {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .viewer-deck-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .viewer-progress {
+            flex: 1;
+            margin: 0 40px;
+        }
+
+        .viewer-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .viewer-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-hover));
+            width: 0;
+            transition: width 0.3s;
+        }
+
+        .viewer-card-num {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .viewer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 80px);
+            padding: 40px;
+        }
+
+        .flashcard {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            perspective: 1500px;
+            margin-bottom: 40px;
+            cursor: pointer;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .viewer-controls {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-primary);
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .nav-btn:disabled {
+            background: var(--border-color);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .nav-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: var(--border-color);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--accent-color);
+            transform: scale(1.3);
+        }
+
+        .dot:hover {
+            transform: scale(1.3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            max-width: 400px;
+        }
+
+        /* Chat Button */
+        .chat-button {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 28px;
+            z-index: 100;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.collapsed {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .search-bar {
+                width: 200px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .decks-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-bar {
+                display: none;
+            }
+            
+            .user-info {
+                display: none;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .modal-row {
+                grid-template-columns: 1fr;
+            }
+
+            .card-inputs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <div class="logo-icon">📖</div>
+                <div class="logo-text">StudyBuddy</div>
+            </div>
+            <a href="#" class="nav-item"><span class="nav-icon">🏠</span>Dashboard</a>
+            <a href="#" class="nav-item"><span class="nav-icon">📝</span>My Notes</a>
+            <a href="#" class="nav-item"><span class="nav-icon">🎯</span>Quizzes</a>
+            <a href="#" class="nav-item active"><span class="nav-icon">🃏</span>Flashcards</a>
+            <a href="#" class="nav-item"><span class="nav-icon">📤</span>Upload Files</a>
+            <div class="nav-divider"></div>
+            <div class="nav-item" id="darkModeBtn"><span class="nav-icon">🌙</span><span id="darkModeText">Dark Mode</span></div>
+            <a href="#" class="nav-item logout"><span class="nav-icon">🚪</span>Logout</a>
+        </div>
+
+        <!-- Overlay -->
+        <div class="overlay" id="overlay"></div>
+
+        <main class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">☰</button>
+                    <div class="header-title">Flashcards</div>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-bar" placeholder="Search decks...">
+                    <div class="notification-icon">🔔
+                        <div class="notification-badge">3</div>
+                    </div>
+                    <div class="user-profile" id="userProfile">
+                        <div class="user-avatar">R</div>
+                        <div>
+                            <div class="user-name">Rohit</div>
+                            <div class="user-role">Student</div>
+                        </div>
+                    </div>
+                    <div class="profile-popup" id="profilePopup">
+                        <div class="profile-popup-item">
+                            <span>👤</span> Profile
+                        </div>
+                        <div class="profile-popup-item">
+                            <span>⚙️</span> Settings
+                        </div>
+                        <div class="profile-popup-item">
+                            <span>🚪</span> Logout
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" id="decksPage">
+                <div class="deck-controls">
+                    <input type="text" id="deckSearch" class="deck-search" placeholder="Search decks...">
+                    <div class="controls-right">
+                        <button id="createDeckBtn" class="create-deck-btn">
+                            <span>➕</span> Create Deck
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon blue">🗂️</div>
+                            <div class="stat-info">
+                                <h3 id="totalDecks">0</h3>
+                                <p>Total Decks</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon purple">🃏</div>
+                            <div class="stat-info">
+                                <h3 id="totalCards">0</h3>
+                                <p>Total Cards</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon orange">⏰</div>
+                            <div class="stat-info">
+                                <h3 id="cardsDue">0</h3>
+                                <p>Cards Due</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon green">⭐</div>
+                            <div class="stat-info">
+                                <h3 id="mastered">0</h3>
+                                <p>Mastered</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decks-grid" id="decksGrid"></div>
+            </div>
+        </main>
+
+        <!-- Viewer Page -->
+        <div class="viewer-page" id="viewerPage">
+            <header class="viewer-header">
+                <div class="viewer-left">
+                    <button class="exit-btn" onclick="exitViewer()">←</button>
+                    <div class="viewer-deck-name" id="viewerDeckName"></div>
+                </div>
+                <div class="viewer-progress">
+                    <div class="viewer-progress-bar">
+                        <div class="viewer-progress-fill" id="viewerProgressFill"></div>
+                    </div>
+                    <div class="viewer-card-num">
+                        Card <span id="currentCardNum">1</span> of <span id="totalCardsNum">10</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="viewer-content">
+                <div class="flashcard" id="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="card-face card-front" id="cardFront"></div>
+                        <div class="card-face card-back" id="cardBack"></div>
+                    </div>
+                </div>
+
+                <div class="viewer-controls">
+                    <button class="nav-btn" id="prevBtn" onclick="previousCard()">←</button>
+                    <div class="nav-dots" id="navDots"></div>
+                    <button class="nav-btn" id="nextBtn" onclick="nextCard()">→</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Deck Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="create-deck-modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">Create New Deck</h2>
+                    <button class="close-btn" id="closeModalBtn">×</button>
+                </div>
+
+                <form id="deckForm">
+                    <div class="modal-row">
+                        <div class="form-group">
+                            <label class="form-label" for="deckName">Deck Name</label>
+                            <input type="text" id="deckName" class="form-input" placeholder="e.g., Biology Basics" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="deckSubject">Subject</label>
+                            <select id="deckSubject" class="form-select" required>
+                                <option value="">Select subject</option>
+                                <option value="Math">Math</option>
+                                <option value="Science">Science</option>
+                                <option value="History">History</option>
+                                <option value="Languages">Languages</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Deck Color</label>
+                        <div class="color-picker">
+                            <div class="color-option color-blue selected" data-color="blue"></div>
+                            <div class="color-option color-purple" data-color="purple"></div>
+                            <div class="color-option color-green" data-color="green"></div>
+                            <div class="color-option color-orange" data-color="orange"></div>
+                            <div class="color-option color-pink" data-color="pink"></div>
+                            <div class="color-option color-red" data-color="red"></div>
+                            <div class="color-option color-teal" data-color="teal"></div>
+                            <div class="color-option color-indigo" data-color="indigo"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="deckDescription" class="form-input form-textarea" placeholder="Brief description of the deck..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cards</label>
+                        <div id="cardsContainer">
+                            <div class="card-item">
+                                <div class="card-item-header">
+                                    <span>Card 1</span>
+                                </div>
+                                <div class="card-inputs">
+                                    <div>
+                                        <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Front</label>
+                                        <textarea class="form-input form-textarea" placeholder="Question or term..." required></textarea>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Back</label>
+                                        <textarea class="form-input form-textarea" placeholder="Answer or definition..." required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="addCardBtn" class="add-card-btn">
+                            <span>➕</span> Add Card
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cancelBtn" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Create Deck</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Chat Button -->
+        <button class="chat-button">🤖</button>
+    </div>
+
+    <script>
+        // Flashcards data
+        let decks = [];
+        let currentDeck = null;
+        let currentCardIndex = 0;
+        let cardCount = 1;
+        let selectedColor = 'blue';
+
+        // Hardcoded predefined decks
+        const predefinedDecks = [
+            {
+                id: 1,
+                name: 'Basic Arithmetic',
+                subject: 'Math',
+                color: 'blue',
+                progress: 50,
+                mastered: 2,
+                total: 4,
+                due: 2,
+                lastStudied: 'Today',
+                cards: [
+                    { front: '2 + 2', back: '4' },
+                    { front: '5 - 3', back: '2' },
+                    { front: '3 * 4', back: '12' },
+                    { front: '10 / 2', back: '5' }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Biology Terms',
+                subject: 'Science',
+                color: 'green',
+                progress: 33,
+                mastered: 1,
+                total: 3,
+                due: 2,
+                lastStudied: 'Yesterday',
+                cards: [
+                    { front: 'What is DNA?', back: 'Deoxyribonucleic acid' },
+                    { front: 'What is a cell?', back: 'Basic unit of life' },
+                    { front: 'What is photosynthesis?', back: 'Process by which plants make food' }
+                ]
+            },
+            {
+                id: 3,
+                name: 'World History',
+                subject: 'History',
+                color: 'orange',
+                progress: 25,
+                mastered: 1,
+                total: 4,
+                due: 3,
+                lastStudied: 'Last Week',
+                cards: [
+                    { front: 'When was World War I?', back: '1914-1918' },
+                    { front: 'Who was the first US President?', back: 'George Washington' },
+                    { front: 'What year did India gain independence?', back: '1947' },
+                    { front: 'Who discovered America?', back: 'Christopher Columbus' }
+                ]
+            },
+            {
+                id: 4,
+                name: 'Basic Spanish Vocabulary',
+                subject: 'Languages',
+                color: 'pink',
+                progress: 75,
+                mastered: 3,
+                total: 4,
+                due: 1,
+                lastStudied: 'Today',
+                cards: [
+                    { front: 'Hello', back: 'Hola' },
+                    { front: 'Thank you', back: 'Gracias' },
+                    { front: 'Yes', back: 'Sí' },
+                    { front: 'No', back: 'No' }
+                ]
+            }
+        ];
+
+        // Load decks on init
+        function loadDecks() {
+            decks = [...predefinedDecks];
+        }
+
+        // Render decks
+        function renderDecks() {
+            const grid = document.getElementById('decksGrid');
+            grid.innerHTML = '';
+
+            if (decks.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🃏</div>
+                        <h3>No Decks Yet</h3>
+                        <p>Create your first flashcard deck to get started!</p>
+                        <button class="create-deck-btn" onclick="document.getElementById('createDeckBtn').click()">
+                            <span>➕</span>Create Your First Deck
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            decks.forEach(deck => {
+                const deckCard = document.createElement('div');
+                deckCard.className = 'deck-card';
+                deckCard.innerHTML = `
+                    <div class="deck-header ${deck.color}"></div>
+                    <div class="deck-body">
+                        <div class="deck-subject">${deck.subject}</div>
+                        <div class="deck-title">${deck.name}</div>
+                        <div class="deck-progress">
+                            <div class="progress-label">
+                                <span>Progress</span>
+                                <span>${deck.mastered}/${deck.total} mastered</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${deck.progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="deck-footer">
+                            <div class="deck-meta">
+                                <div>🕐 ${deck.due} due</div>
+                                <div>Last: ${deck.lastStudied}</div>
+                            </div>
+                            <button class="study-btn" onclick="openDeck(${deck.id})">
+                                <span>▶</span>Study Now
+                            </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(deckCard);
+            });
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('totalDecks').textContent = decks.length;
+            document.getElementById('totalCards').textContent = decks.reduce((sum, d) => sum + d.total, 0);
+            document.getElementById('cardsDue').textContent = decks.reduce((sum, d) => sum + d.due, 0);
+            document.getElementById('mastered').textContent = decks.reduce((sum, d) => sum + d.mastered, 0);
+        }
+
+        // Open deck viewer
+        function openDeck(deckId) {
+            currentDeck = decks.find(d => d.id === deckId);
+            if (!currentDeck || !currentDeck.cards || currentDeck.cards.length === 0) {
+                alert('This deck has no cards yet!');
+                return;
+            }
+
+            currentCardIndex = 0;
+            document.getElementById('decksPage').style.display = 'none';
+            document.getElementById('viewerPage').classList.add('active');
+            
+            loadCard();
+            createDots();
+        }
+
+        // Load current card
+        function loadCard() {
+            if (!currentDeck || !currentDeck.cards || currentDeck.cards.length === 0) return;
+            
+            const card = currentDeck.cards[currentCardIndex];
+            document.getElementById('viewerDeckName').textContent = currentDeck.name;
+            document.getElementById('currentCardNum').textContent = currentCardIndex + 1;
+            document.getElementById('totalCardsNum').textContent = currentDeck.cards.length;
+            document.getElementById('cardFront').textContent = card.front;
+            document.getElementById('cardBack').textContent = card.back;
+            
+            document.getElementById('flashcard').classList.remove('flipped');
+            
+            const progress = ((currentCardIndex + 1) / currentDeck.cards.length) * 100;
+            document.getElementById('viewerProgressFill').style.width = `${progress}%`;
+            
+            updateDots();
+            
+            document.getElementById('prevBtn').disabled = currentCardIndex === 0;
+            document.getElementById('nextBtn').disabled = currentCardIndex === currentDeck.cards.length - 1;
+        }
+
+        // Create navigation dots
+        function createDots() {
+            const dotsContainer = document.getElementById('navDots');
+            dotsContainer.innerHTML = '';
+            
+            if (!currentDeck || !currentDeck.cards) return;
+            
+            currentDeck.cards.forEach((_, index) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (index === currentCardIndex) dot.classList.add('active');
+                dot.onclick = () => goToCard(index);
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        // Update dots
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentCardIndex);
+            });
+        }
+
+        // Go to specific card
+        function goToCard(index) {
+            if (index >= 0 && currentDeck && currentDeck.cards && index < currentDeck.cards.length) {
+                currentCardIndex = index;
+                loadCard();
+            }
+        }
+
+        // Previous card
+        function previousCard() {
+            if (currentCardIndex > 0) {
+                goToCard(currentCardIndex - 1);
+            }
+        }
+
+        // Next card
+        function nextCard() {
+            if (currentDeck && currentDeck.cards && currentCardIndex < currentDeck.cards.length - 1) {
+                goToCard(currentCardIndex + 1);
+            }
+        }
+
+        // Exit viewer
+        function exitViewer() {
+            document.getElementById('viewerPage').classList.remove('active');
+            document.getElementById('decksPage').style.display = 'block';
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Sidebar toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            const mainContent = document.getElementById('mainContent');
+            
+            menuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sidebar.classList.toggle('collapsed');
+                overlay.classList.toggle('active');
+                mainContent.classList.toggle('expanded');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('collapsed');
+                overlay.classList.remove('active');
+                mainContent.classList.remove('expanded');
+            });
+
+            // Dark mode toggle
+            const darkModeBtn = document.getElementById('darkModeBtn');
+            const darkModeText = document.getElementById('darkModeText');
+            const isDarkMode = false;
+            
+            darkModeBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                
+                darkModeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+                darkModeBtn.querySelector('.nav-icon').textContent = isDark ? '☀️' : '🌙';
+            });
+
+            // Profile popup
+            const userProfile = document.getElementById('userProfile');
+            const profilePopup = document.getElementById('profilePopup');
+            
+            userProfile.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profilePopup.classList.toggle('active');
+            });
+            
+            document.addEventListener('click', () => {
+                profilePopup.classList.remove('active');
+            });
+
+            // Flip card
+            const flashcard = document.getElementById('flashcard');
+            flashcard.addEventListener('click', () => {
+                flashcard.classList.toggle('flipped');
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (document.getElementById('viewerPage').classList.contains('active')) {
+                    if (e.key === 'ArrowRight') {
+                        nextCard();
+                    } else if (e.key === 'ArrowLeft') {
+                        previousCard();
+                    } else if (e.key === ' ' || e.key === 'Enter') {
+                        e.preventDefault();
+                        document.getElementById('flashcard').classList.toggle('flipped');
+                    } else if (e.key === 'Escape') {
+                        exitViewer();
+                    }
+                }
+            });
+
+            // Modal controls
+            const createDeckBtn = document.getElementById('createDeckBtn');
+            const modalOverlay = document.getElementById('modalOverlay');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+
+            createDeckBtn.addEventListener('click', () => {
+                modalOverlay.classList.add('active');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+            });
+
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    modalOverlay.classList.remove('active');
+                }
+            });
+
+            // Color picker
+            document.querySelectorAll('.color-option').forEach(opt => {
+                opt.addEventListener('click', function() {
+                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedColor = this.dataset.color;
+                });
+            });
+
+            // Add card
+            document.getElementById('addCardBtn').addEventListener('click', () => {
+                cardCount++;
+                const container = document.getElementById('cardsContainer');
+                const cardItem = document.createElement('div');
+                cardItem.className = 'card-item';
+                cardItem.innerHTML = `
+                    <div class="card-item-header">
+                        <span>Card ${cardCount}</span>
+                        <button type="button" class="remove-card-btn" onclick="this.closest('.card-item').remove()">×</button>
+                    </div>
+                    <div class="card-inputs">
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Front</label>
+                            <textarea class="form-input form-textarea" placeholder="Question or term..." required></textarea>
+                        </div>
+                        <div>
+                            <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Back</label>
+                            <textarea class="form-input form-textarea" placeholder="Answer or definition..." required></textarea>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(cardItem);
+            });
+
+            // Form submit
+            document.getElementById('deckForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('deckName').value.trim();
+                const subject = document.getElementById('deckSubject').value;
+                
+                const cardItems = document.querySelectorAll('.card-item');
+                const cards = [];
+                
+                cardItems.forEach(item => {
+                    const inputs = item.querySelectorAll('textarea');
+                    const front = inputs[0].value.trim();
+                    const back = inputs[1].value.trim();
+                    
+                    if (front && back) {
+                        cards.push({ front, back });
+                    }
+                });
+                
+                if (cards.length === 0) {
+                    alert('Please add at least one card!');
+                    return;
+                }
+                
+                const newDeck = {
+                    id: Date.now(),
+                    name,
+                    subject,
+                    color: selectedColor,
+                    progress: 0,
+                    mastered: 0,
+                    total: cards.length,
+                    due: cards.length,
+                    lastStudied: 'Never',
+                    cards
+                };
+                
+                decks.unshift(newDeck);
+                
+                document.getElementById('deckForm').reset();
+                document.getElementById('cardsContainer').innerHTML = `
+                    <div class="card-item">
+                        <div class="card-item-header">
+                            <span>Card 1</span>
+                        </div>
+                        <div class="card-inputs">
+                            <div>
+                                <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Front</label>
+                                <textarea class="form-input form-textarea" placeholder="Question or term..." required></textarea>
+                            </div>
+                            <div>
+                                <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Back</label>
+                                <textarea class="form-input form-textarea" placeholder="Answer or definition..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                cardCount = 1;
+                selectedColor = 'blue';
+                document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+                document.querySelector('.color-blue').classList.add('selected');
+                
+                modalOverlay.classList.remove('active');
+                
+                renderDecks();
+                updateStats();
+                
+                alert(`Deck "${name}" created successfully with ${cards.length} cards!`);
+            });
+
+            // Search
+            document.getElementById('deckSearch').addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                document.querySelectorAll('.deck-card').forEach(card => {
+                    const title = card.querySelector('.deck-title')?.textContent.toLowerCase() || '';
+                    const subject = card.querySelector('.deck-subject')?.textContent.toLowerCase() || '';
+                    
+                    card.style.display = (title.includes(query) || subject.includes(query)) ? 'block' : 'none';
+                });
+            });
+
+            // Chat button
+            document.querySelector('.chat-button').addEventListener('click', () => {
+                alert('AI Assistant chat opening soon!');
+            });
+        }
+
+        // Initialize
+        loadDecks();
+        renderDecks();
+        updateStats();
+        setupEventListeners();
+    </script>
+</body>
+</html>
