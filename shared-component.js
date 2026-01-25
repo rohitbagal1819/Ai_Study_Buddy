@@ -36,18 +36,6 @@ function initializeSidebar() {
                 <span class="nav-icon">🃏</span>
                 <span class="nav-text">Flashcards</span>
             </a>
-            <a href="#" class="nav-item" data-page="analytics">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Analytics</span>
-            </a>
-            <a href="#" class="nav-item" data-page="groups">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Study Groups</span>
-            </a>
-            <a href="#" class="nav-item" data-page="assistant">
-                <span class="nav-icon">🤖</span>
-                <span class="nav-text">AI Assistant</span>
-            </a>
             
             <div class="nav-divider"></div>
             
