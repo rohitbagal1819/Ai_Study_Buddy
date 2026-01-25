@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="stylesheet" href="flashcard.css">
+    <title>StudyBuddy - Flashcards</title> 
+</head>
+<body>
+    <div class="container">
+
+        <main class="main-content" id="mainContent">
+            <header class="header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle">☰</button>
+                    <div class="header-title">Flashcards</div>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-bar" placeholder="Search decks...">
+                    <div class="notification-icon">🔔
+                        <div class="notification-badge">3</div>
+                    </div>
+                    <div class="user-profile" id="userProfile">
+                        <div class="user-avatar">R</div>
+                        <div>
+                            <div class="user-name">Rohit</div>
+                            <div class="user-role">Student</div>
+                        </div>
+                    </div>
+                    <div class="profile-popup" id="profilePopup">
+                        <div class="profile-popup-item">
+                            <span>👤</span> Profile
+                        </div>
+                        <div class="profile-popup-item">
+                            <span>⚙️</span> Settings
+                        </div>
+                        <div class="profile-popup-item">
+                            <span>🚪</span> Logout
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" id="decksPage">
+                <div class="deck-controls">
+                    <input type="text" id="deckSearch" class="deck-search" placeholder="Search decks...">
+                    <div class="controls-right">
+                        <button id="createDeckBtn" class="create-deck-btn">
+                            <span>➕</span> Create Deck
+                        </button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon blue">🗂️</div>
+                            <div class="stat-info">
+                                <h3 id="totalDecks">0</h3>
+                                <p>Total Decks</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon purple">🃏</div>
+                            <div class="stat-info">
+                                <h3 id="totalCards">0</h3>
+                                <p>Total Cards</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon orange">⏰</div>
+                            <div class="stat-info">
+                                <h3 id="cardsDue">0</h3>
+                                <p>Cards Due</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon green">⭐</div>
+                            <div class="stat-info">
+                                <h3 id="mastered">0</h3>
+                                <p>Mastered</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="decks-grid" id="decksGrid"></div>
+            </div>
+        </main>
+
+        <!-- Viewer Page -->
+        <div class="viewer-page" id="viewerPage">
+            <header class="viewer-header">
+                <div class="viewer-left">
+                    <button class="exit-btn" onclick="exitViewer()">←</button>
+                    <div class="viewer-deck-name" id="viewerDeckName"></div>
+                </div>
+                <div class="viewer-progress">
+                    <div class="viewer-progress-bar">
+                        <div class="viewer-progress-fill" id="viewerProgressFill"></div>
+                    </div>
+                    <div class="viewer-card-num">
+                        Card <span id="currentCardNum">1</span> of <span id="totalCardsNum">10</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="viewer-content">
+                <div class="flashcard" id="flashcard">
+                    <div class="flashcard-inner">
+                        <div class="card-face card-front" id="cardFront"></div>
+                        <div class="card-face card-back" id="cardBack"></div>
+                    </div>
+                </div>
+
+                <div class="viewer-controls">
+                    <button class="nav-btn" id="prevBtn" onclick="previousCard()">←</button>
+                    <div class="nav-dots" id="navDots"></div>
+                    <button class="nav-btn" id="nextBtn" onclick="nextCard()">→</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Deck Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="create-deck-modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">Create New Deck</h2>
+                    <button class="close-btn" id="closeModalBtn">×</button>
+                </div>
+
+                <form id="deckForm">
+                    <div class="modal-row">
+                        <div class="form-group">
+                            <label class="form-label" for="deckName">Deck Name</label>
+                            <input type="text" id="deckName" class="form-input" placeholder="e.g., Biology Basics" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="deckSubject">Subject</label>
+                            <select id="deckSubject" class="form-select" required>
+                                <option value="">Select subject</option>
+                                <option value="Math">Math</option>
+                                <option value="Science">Science</option>
+                                <option value="History">History</option>
+                                <option value="Languages">Languages</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Deck Color</label>
+                        <div class="color-picker">
+                            <div class="color-option color-blue selected" data-color="blue"></div>
+                            <div class="color-option color-purple" data-color="purple"></div>
+                            <div class="color-option color-green" data-color="green"></div>
+                            <div class="color-option color-orange" data-color="orange"></div>
+                            <div class="color-option color-pink" data-color="pink"></div>
+                            <div class="color-option color-red" data-color="red"></div>
+                            <div class="color-option color-teal" data-color="teal"></div>
+                            <div class="color-option color-indigo" data-color="indigo"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea id="deckDescription" class="form-input form-textarea" placeholder="Brief description of the deck..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Cards</label>
+                        <div id="cardsContainer">
+                            <div class="card-item">
+                                <div class="card-item-header">
+                                    <span>Card 1</span>
+                                </div>
+                                <div class="card-inputs">
+                                    <div>
+                                        <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Front</label>
+                                        <textarea class="form-input form-textarea" placeholder="Question or term..." required></textarea>
+                                    </div>
+                                    <div>
+                                        <label style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: block;">Back</label>
+                                        <textarea class="form-input form-textarea" placeholder="Answer or definition..." required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="addCardBtn" class="add-card-btn">
+                            <span>➕</span> Add Card
+                        </button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" id="cancelBtn" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Create Deck</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Chat Button -->
+        <button class="chat-button">🤖</button>
+    </div>
+    <script src="shared-component.js"></script>
+    <script src="flashcard.js"></script>
+</body>
+</html>

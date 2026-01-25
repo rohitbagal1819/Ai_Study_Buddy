@@ -33,31 +33,19 @@ function initializeSidebar() {
                 <span class="nav-text">Quizzes</span>
             </a>
             <a href="#" class="nav-item" data-page="flashcards">
-                <span class="nav-icon">🃏</span>
+                <span class="nav-icon">🧠</span>
                 <span class="nav-text">Flashcards</span>
-            </a>
-            <a href="#" class="nav-item" data-page="analytics">
-                <span class="nav-icon">📈</span>
-                <span class="nav-text">Analytics</span>
-            </a>
-            <a href="#" class="nav-item" data-page="groups">
-                <span class="nav-icon">👥</span>
-                <span class="nav-text">Study Groups</span>
-            </a>
-            <a href="#" class="nav-item" data-page="assistant">
-                <span class="nav-icon">🤖</span>
-                <span class="nav-text">AI Assistant</span>
             </a>
             
             <div class="nav-divider"></div>
             
             <a href="#" class="nav-item" data-page="help">
-                <span class="nav-icon">❔</span>
+                <span class="nav-icon">?</span>
                 <span class="nav-text">Help</span>
             </a>
             <a href="#" class="nav-item" id="darkModeBtn">
                 <span class="nav-icon">🌙</span>
-                <span class="nav-text" id="darkModeText">Dark Mode</span>
+                <span class="nav-text" id="darkModeText">Light Mode</span>
             </a>
             <a href="#" class="nav-item" data-page="settings">
                 <span class="nav-icon">⚙️</span>
@@ -169,7 +157,7 @@ function initializeDarkMode() {
     if (isDarkMode) {
         document.body.classList.add('dark-mode');
         darkModeText.textContent = 'Light Mode';
-        darkModeBtn.querySelector('.nav-icon').textContent = '☀️';
+        darkModeBtn.querySelector('.nav-icon').textContent = '🌙';
     }
     
     // Toggle dark mode
@@ -179,7 +167,7 @@ function initializeDarkMode() {
         const isDark = document.body.classList.contains('dark-mode');
         
         darkModeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-        darkModeBtn.querySelector('.nav-icon').textContent = isDark ? '☀️' : '🌙';
+        darkModeBtn.querySelector('.nav-icon').textContent = isDark ? '🌙' : '☀️';
         
         // Save preference
         localStorage.setItem('darkMode', isDark);
