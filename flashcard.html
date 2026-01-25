@@ -3,29 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="shared-styles.css">
     <link rel="stylesheet" href="flashcard.css">
     <title>StudyBuddy - Flashcards</title> 
 </head>
 <body>
     <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="logo">
-                <div class="logo-icon">📖</div>
-                <div class="logo-text">StudyBuddy</div>
-            </div>
-            <a href="#" class="nav-item"><span class="nav-icon">🏠</span>Dashboard</a>
-            <a href="#" class="nav-item"><span class="nav-icon">📝</span>My Notes</a>
-            <a href="#" class="nav-item"><span class="nav-icon">🎯</span>Quizzes</a>
-            <a href="#" class="nav-item active"><span class="nav-icon">🃏</span>Flashcards</a>
-            <a href="#" class="nav-item"><span class="nav-icon">📤</span>Upload Files</a>
-            <div class="nav-divider"></div>
-            <div class="nav-item" id="darkModeBtn"><span class="nav-icon">🌙</span><span id="darkModeText">Dark Mode</span></div>
-            <a href="#" class="nav-item logout"><span class="nav-icon">🚪</span>Logout</a>
-        </div>
-
-        <!-- Overlay -->
-        <div class="overlay" id="overlay"></div>
 
         <main class="main-content" id="mainContent">
             <header class="header">
@@ -226,7 +209,7 @@
         <!-- Chat Button -->
         <button class="chat-button">🤖</button>
     </div>
-
+    <script src="shared-component.js"></script>
     <script src="flashcard.js"></script>
 </body>
 </html>

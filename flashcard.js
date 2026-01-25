@@ -233,50 +233,10 @@
         // Setup event listeners
         function setupEventListeners() {
             // Sidebar toggle
-            const menuToggle = document.getElementById('menuToggle');
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-            const mainContent = document.getElementById('mainContent');
-            
-            menuToggle.addEventListener('click', (e) => {
-                e.stopPropagation();
-                sidebar.classList.toggle('collapsed');
-                overlay.classList.toggle('active');
-                mainContent.classList.toggle('expanded');
-            });
-            
-            overlay.addEventListener('click', () => {
-                sidebar.classList.remove('collapsed');
-                overlay.classList.remove('active');
-                mainContent.classList.remove('expanded');
-            });
 
             // Dark mode toggle
-            const darkModeBtn = document.getElementById('darkModeBtn');
-            const darkModeText = document.getElementById('darkModeText');
-            const isDarkMode = false;
-            
-            darkModeBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                document.body.classList.toggle('dark-mode');
-                const isDark = document.body.classList.contains('dark-mode');
-                
-                darkModeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-                darkModeBtn.querySelector('.nav-icon').textContent = isDark ? '☀️' : '🌙';
-            });
 
             // Profile popup
-            const userProfile = document.getElementById('userProfile');
-            const profilePopup = document.getElementById('profilePopup');
-            
-            userProfile.addEventListener('click', (e) => {
-                e.stopPropagation();
-                profilePopup.classList.toggle('active');
-            });
-            
-            document.addEventListener('click', () => {
-                profilePopup.classList.remove('active');
-            });
 
             // Flip card
             const flashcard = document.getElementById('flashcard');
