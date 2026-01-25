@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="shared-styles.css">
-    <link rel="stylesheet" href="flashcard.css">
+    <link rel="stylesheet" href="../css/shared-styles.css">
+    <link rel="stylesheet" href="../css/flashcard.css">
     <title>StudyBuddy - Flashcards</title> 
 </head>
 <body>
     <div class="container">
-
+        <aside class="sidebar" id="sidebar"></aside>
         <main class="main-content" id="mainContent">
             <header class="header">
                 <div class="header-left">
@@ -17,26 +17,26 @@
                     <div class="header-title">Flashcards</div>
                 </div>
                 <div class="header-right">
-                    <!-- <input type="text" class="search-bar" placeholder="Search decks..."> -->
+                    <input type="text" class="search-bar" placeholder="Search decks...">
                     <div class="notification-icon">🔔
                         <div class="notification-badge">3</div>
                     </div>
                     <div class="user-profile" id="userProfile">
                         <div class="user-avatar">R</div>
-                        <div>
+                        <div class="user-info">
                             <div class="user-name">Rohit</div>
                             <div class="user-role">Student</div>
                         </div>
-                    </div>
-                    <div class="profile-popup" id="profilePopup">
-                        <div class="profile-popup-item">
-                            <span>👤</span> Profile
-                        </div>
-                        <div class="profile-popup-item">
-                            <span>⚙️</span> Settings
-                        </div>
-                        <div class="profile-popup-item">
-                            <span>🚪</span> Logout
+                        <div class="profile-popup" id="profilePopup">
+                            <div class="profile-popup-item">
+                                <span>👤</span> Profile
+                            </div>
+                            <div class="profile-popup-item">
+                                <span>⚙️</span> Settings
+                            </div>
+                            <div class="profile-popup-item logout">
+                                <span>🚪</span> Logout
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@
         <!-- Chat Button -->
         <button class="chat-button">🤖</button>
     </div>
-    <script src="shared-component.js"></script>
-    <script src="flashcard.js"></script>
+    <script src="../js/shared-component.js"></script>
+    <script src="../js/flashcard.js"></script>
 </body>
 </html>

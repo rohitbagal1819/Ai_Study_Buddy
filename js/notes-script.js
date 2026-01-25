@@ -249,9 +249,6 @@ function initializeEventListeners() {
   // Dark Mode
   setupDarkModeToggle();
 
-  // Profile Popup
-  setupProfilePopup();
-
   // Modal
   setupModalEvents();
 
@@ -266,9 +263,6 @@ function initializeEventListeners() {
 
   // View Toggle
   setupViewToggle();
-
-  // Navigation
-  setupNavigation();
 
   // AI Tips
   setupAITips();
@@ -315,40 +309,6 @@ function updateDarkModeButton() {
   const darkModeIcon = document.getElementById('darkModeBtn').querySelector('.nav-icon');
   darkModeText.textContent = isDark ? 'Light Mode' : 'Dark Mode';
   darkModeIcon.textContent = isDark ? '☀️' : '🌙';
-}
-
-// ==========================================
-// PROFILE & NAVIGATION
-// ==========================================
-
-function setupProfilePopup() {
-  const userProfile = document.getElementById('userProfile');
-  const profilePopup = document.getElementById('profilePopup');
-
-  userProfile.addEventListener('click', (e) => {
-    e.stopPropagation();
-    profilePopup.classList.toggle('active');
-  });
-
-  document.addEventListener('click', () => {
-    profilePopup.classList.remove('active');
-  });
-}
-
-function setupNavigation() {
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      const isSpecial = this.textContent.includes('Dark Mode') || 
-                       this.textContent.includes('Light Mode') || 
-                       this.classList.contains('logout-btn');
-
-      if (!isSpecial) {
-        e.preventDefault();
-        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-        this.classList.add('active');
-      }
-    });
-  });
 }
 
 // ==========================================

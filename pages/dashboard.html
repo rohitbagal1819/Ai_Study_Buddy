@@ -6,76 +6,23 @@
   <title>StudyBuddy - Dashboard</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="../css/shared-styles.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
 </head>
 
 <body>
   <div class="container">
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-icon">📚</div>
-        <div class="brand-text">StudyBuddy</div>
-      </div>
-
-      <nav class="nav">
-        <a href="dashboard.html" class="nav-item active">
-          <span class="nav-icon">📊</span>Dashboard
-        </a>
-
-        <a href="notes.html" class="nav-item">
-          <span class="nav-icon">📝</span>Notes
-        </a>
-
-        <a href="upload.html" class="nav-item">
-          <span class="nav-icon">📤</span>File Upload
-        </a>
-
-        <a href="quizze.html" class="nav-item">
-          <span class="nav-icon">❓</span>Quizzes
-        </a>
-
-        <a href="flashcard.html" class="nav-item">
-          <span class="nav-icon">🧠</span>Flashcards
-        </a>
-
-        <a href="analytics.html" class="nav-item">
-          <span class="nav-icon">📈</span>Analytics
-        </a>
-
-        <a href="groups.html" class="nav-item">
-          <span class="nav-icon">👥</span>Study Groups
-        </a>
-
-        <a href="assistant.html" class="nav-item">
-          <span class="nav-icon">🤖</span>AI Assistant
-        </a>
-
-        <div class="nav-line"></div>
-
-        <a href="#" class="nav-item">
-          <span class="nav-icon">❔</span>Help
-        </a>
-
-        <button class="nav-item toggle-btn" id="themeToggle">
-          <span class="nav-icon" id="themeIcon">🌙</span>
-          <span id="themeText">Light Mode</span>
-        </button>
-
-        <a href="#" class="nav-item">
-          <span class="nav-icon">⚙️</span>Settings
-        </a>
-      </nav>
-    </aside>
-
     <!-- Main -->
-    <main class="main">
+    <main class="main-content">
       <!-- Topbar -->
-      <header class="topbar">
-        <h1 class="page-title">Dashboard</h1>
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <h1 class="page-title">Dashboard</h1>
+        </div>
 
-        <div class="top-actions">
+        <div class="header-right">
           <input class="search" type="text" placeholder="Search notes, flashcards, quizzes..." />
 
           <button class="icon-btn bell">
@@ -169,9 +116,9 @@
       <!-- Floating Chat Button -->
       <button class="chat-btn">💬</button>
     </main>
-
   </div>
 
+  <script src="../js/shared-component.js"></script>
   <script>
     // Theme Toggle (same vibe like your notes page)
     const themeToggle = document.getElementById("themeToggle");

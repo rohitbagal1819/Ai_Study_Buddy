@@ -1,168 +1,18 @@
 /* ===================================
-   FLASHCARD.CSS - FIXED VERSION
-   (Only flashcard-specific styles)
+   FLASHCARD.CSS - FLASHCARD SPECIFIC STYLES
    =================================== */
-
-/* Header */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
-}
-
-.header {
-    background: var(--bg-secondary);
-    padding: 30px 40px;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-title {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.search-bar {
-    width: 400px;
-    padding: 12px 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    font-size: 14px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    transition: all 0.3s;
-}
-
-.search-bar:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
-
-.notification-icon {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    background: var(--bg-tertiary);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.notification-icon:hover {
-    transform: scale(1.1);
-}
-
-.notification-badge {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background: #e53e3e;
-    color: white;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 12px;
-    transition: all 0.3s;
-    position: relative;
-}
-
-.user-profile:hover {
-    background: var(--bg-tertiary);
-}
-
-.user-avatar {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-.user-name {
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.user-role {
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.profile-popup {
-    position: absolute;
-    top: 70px;
-    right: 0;
-    width: 280px;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    padding: 20px;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s;
-}
-
-.profile-popup.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.profile-popup-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--text-primary);
-}
-
-.profile-popup-item:hover {
-    background: var(--bg-tertiary);
-    transform: translateX(5px);
-}
 
 /* Content Area */
 .content-area {
-    padding: 30px 40px;
     background: var(--bg-primary);
+}
+
+/* Remove top margin/padding from all main content blocks */
+.stats-grid,
+.deck-controls,
+.content-area {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
 }
 
 /* Flashcard Controls */
@@ -170,7 +20,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-top: 0;
+    margin-bottom: 24px;
 }
 
 .deck-search {
@@ -220,6 +71,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 24px;
+    margin-top: 0;
     margin-bottom: 40px;
 }
 
@@ -466,9 +318,8 @@ body.dark-mode .stat-icon.green { background: rgba(76, 175, 80, 0.2); }
     margin-bottom: 8px;
 }
 
-/* Make labels clearly visible in dark mode */
 body.dark-mode .form-label {
-    color: #e2e8f0 !important;          /* lighter gray */
+    color: #e2e8f0;
 }
 
 .form-input,
@@ -484,7 +335,6 @@ body.dark-mode .form-label {
     transition: all 0.3s;
 }
 
-/* Modern card textarea styling */
 .card-inputs textarea.form-textarea {
     min-height: 120px;
     padding: 14px 16px;
@@ -498,14 +348,12 @@ body.dark-mode .form-label {
     color: var(--text-primary);
 }
 
-/* Hover & focus states */
 .card-inputs textarea.form-textarea:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
     outline: none;
 }
 
-/* Dark mode enhancement */
 body.dark-mode .card-inputs textarea.form-textarea {
     background: #374151;
     border-color: #4b5563;
@@ -516,7 +364,6 @@ body.dark-mode .card-inputs textarea.form-textarea:focus {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
 }
 
-/* Better label inside card-item */
 .card-inputs label {
     font-size: 13px;
     font-weight: 500;
@@ -529,18 +376,17 @@ body.dark-mode .card-inputs label {
     color: #cbd5e1;
 }
 
-/* Force readable text in dark mode */
 body.dark-mode .form-input,
 body.dark-mode .form-select,
 body.dark-mode .form-textarea {
-    color: #f0f4f8 !important;          /* lighter gray-white */
-    background: #374151 !important;     /* darker but readable input bg */
-    border-color: #4b5563 !important;
+    color: #f0f4f8;
+    background: #374151;
+    border-color: #4b5563;
 }
 
 body.dark-mode .form-input::placeholder,
 body.dark-mode .form-textarea::placeholder {
-    color: #9ca3af !important;          /* visible placeholder in dark mode */
+    color: #9ca3af;
 }
 
 .form-input:focus, .form-select:focus {
@@ -898,32 +744,7 @@ body.dark-mode .form-textarea::placeholder {
     max-width: 400px;
 }
 
-/* Chat Button */
-.chat-button {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 60px;
-    height: 60px;
-    background: var(--accent-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    cursor: pointer;
-    transition: all 0.3s;
-    color: white;
-    font-size: 28px;
-    z-index: 100;
-}
-
-.chat-button:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
-}
-
-/* Mobile Responsive - FLASHCARD SPECIFIC ONLY */
+/* Mobile Responsive */
 @media (max-width: 768px) {
     .stats-grid {
         grid-template-columns: 1fr 1fr;
@@ -935,22 +756,6 @@ body.dark-mode .form-textarea::placeholder {
 }
 
 @media (max-width: 480px) {
-    .search-bar {
-        display: none;
-    }
-    
-    .user-info {
-        display: none;
-    }
-
-    .header {
-        padding: 20px;
-    }
-
-    .content-area {
-        padding: 20px;
-    }
-
     .modal-row {
         grid-template-columns: 1fr;
     }

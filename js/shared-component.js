@@ -10,61 +10,79 @@ document.addEventListener('DOMContentLoaded', function() {
 // Create and inject sidebar HTML
 function initializeSidebar() {
     const sidebarHTML = `
-        <div class="sidebar" id="sidebar">
-            <div class="logo">
-                <div class="logo-icon">📚</div>
-                <div class="logo-text">StudyBuddy</div>
-            </div>
-            
-            <a href="dashboard.html" class="nav-item" data-page="dashboard">
-                <span class="nav-icon">📊</span>
-                <span class="nav-text">Dashboard</span>
-            </a>
-            <a href="notes.html" class="nav-item" data-page="notes">
-                <span class="nav-icon">📝</span>
-                <span class="nav-text">Notes</span>
-            </a>
-            <a href="upload.html" class="nav-item" data-page="upload">
-                <span class="nav-icon">📤</span>
-                <span class="nav-text">File Upload</span>
-            </a>
-            <a href="quizze.html" class="nav-item" data-page="quizze">
-                <span class="nav-icon">❓</span>
-                <span class="nav-text">Quizzes</span>
-            </a>
-            <a href="#" class="nav-item" data-page="flashcards">
-                <span class="nav-icon">🧠</span>
-                <span class="nav-text">Flashcards</span>
-            </a>
-            
-            <div class="nav-divider"></div>
-            
-            <a href="#" class="nav-item" data-page="help">
-                <span class="nav-icon">?</span>
-                <span class="nav-text">Help</span>
-            </a>
-            <a href="#" class="nav-item" id="darkModeBtn">
-                <span class="nav-icon">🌙</span>
-                <span class="nav-text" id="darkModeText">Light Mode</span>
-            </a>
-            <a href="#" class="nav-item" data-page="settings">
-                <span class="nav-icon">⚙️</span>
-                <span class="nav-text">Settings</span>
-            </a>
-            
-            <div class="nav-divider"></div>
-            
-            <a href="login.html" class="nav-item logout">
-                <span class="nav-icon">🚪</span>
-                <span class="nav-text">Logout</span>
-            </a>
+        <div class="logo">
+            <div class="logo-icon">📚</div>
+            <div class="logo-text">StudyBuddy</div>
         </div>
         
-        <div class="overlay" id="overlay"></div>
+        <a href="./dashboard.html" class="nav-item" data-page="dashboard">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Dashboard</span>
+        </a>
+        <a href="./notes.html" class="nav-item" data-page="notes">
+            <span class="nav-icon">📝</span>
+            <span class="nav-text">Notes</span>
+        </a>
+        <a href="./upload.html" class="nav-item" data-page="upload">
+            <span class="nav-icon">📤</span>
+            <span class="nav-text">File Upload</span>
+        </a>
+        <a href="./quizze.html" class="nav-item" data-page="quizze">
+            <span class="nav-icon">❓</span>
+            <span class="nav-text">Quizzes</span>
+        </a>
+        <a href="./flashcard.html" class="nav-item" data-page="flashcard">
+            <span class="nav-icon">🧠</span>
+            <span class="nav-text">Flashcards</span>
+        </a>
+        
+        <div class="nav-divider"></div>
+        
+        <a href="#" class="nav-item" data-page="help">
+            <span class="nav-icon">?</span>
+            <span class="nav-text">Help</span>
+        </a>
+        <a href="#" class="nav-item" id="darkModeBtn">
+            <span class="nav-icon">🌙</span>
+            <span class="nav-text" id="darkModeText">Light Mode</span>
+        </a>
+        <a href="#" class="nav-item" data-page="settings">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-text">Settings</span>
+        </a>
+        
+        <div class="nav-divider"></div>
+        
+        <a href="./login.html" class="nav-item logout">
+            <span class="nav-icon">🚪</span>
+            <span class="nav-text">Logout</span>
+        </a>
     `;
     
-    // Insert sidebar at the beginning of body
-    document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+    // Find existing sidebar or create one
+    let sidebar = document.getElementById('sidebar');
+    if (!sidebar) {
+        const container = document.querySelector('.container');
+        if (container) {
+            sidebar = document.createElement('aside');
+            sidebar.className = 'sidebar';
+            sidebar.id = 'sidebar';
+            container.insertBefore(sidebar, container.firstChild);
+        } else {
+            document.body.insertAdjacentHTML('afterbegin', `<aside class="sidebar" id="sidebar"></aside>`);
+            sidebar = document.getElementById('sidebar');
+        }
+    }
+    
+    // Populate sidebar content if empty
+    if (sidebar && sidebar.children.length === 0) {
+        sidebar.innerHTML = sidebarHTML;
+    }
+    
+    // Create overlay if it doesn't exist
+    if (!document.getElementById('overlay')) {
+        document.body.insertAdjacentHTML('beforeend', '<div class="overlay" id="overlay"></div>');
+    }
     
     // Add menu toggle button to header if it doesn't exist
     const header = document.querySelector('.header');
