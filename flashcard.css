@@ -466,7 +466,14 @@ body.dark-mode .stat-icon.green { background: rgba(76, 175, 80, 0.2); }
     margin-bottom: 8px;
 }
 
-.form-input, .form-select {
+/* Make labels clearly visible in dark mode */
+body.dark-mode .form-label {
+    color: #e2e8f0 !important;          /* lighter gray */
+}
+
+.form-input,
+.form-select,
+.form-textarea {
     width: 100%;
     padding: 12px 16px;
     border: 1px solid var(--border-color);
@@ -475,6 +482,65 @@ body.dark-mode .stat-icon.green { background: rgba(76, 175, 80, 0.2); }
     background: var(--bg-tertiary);
     color: var(--text-primary);
     transition: all 0.3s;
+}
+
+/* Modern card textarea styling */
+.card-inputs textarea.form-textarea {
+    min-height: 120px;
+    padding: 14px 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    resize: vertical;
+    transition: all 0.2s ease;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+/* Hover & focus states */
+.card-inputs textarea.form-textarea:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+    outline: none;
+}
+
+/* Dark mode enhancement */
+body.dark-mode .card-inputs textarea.form-textarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f1f5f9;
+}
+
+body.dark-mode .card-inputs textarea.form-textarea:focus {
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+}
+
+/* Better label inside card-item */
+.card-inputs label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+    display: block;
+}
+
+body.dark-mode .card-inputs label {
+    color: #cbd5e1;
+}
+
+/* Force readable text in dark mode */
+body.dark-mode .form-input,
+body.dark-mode .form-select,
+body.dark-mode .form-textarea {
+    color: #f0f4f8 !important;          /* lighter gray-white */
+    background: #374151 !important;     /* darker but readable input bg */
+    border-color: #4b5563 !important;
+}
+
+body.dark-mode .form-input::placeholder,
+body.dark-mode .form-textarea::placeholder {
+    color: #9ca3af !important;          /* visible placeholder in dark mode */
 }
 
 .form-input:focus, .form-select:focus {
