@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyBuddy - Dashboard</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">📚</div>
+        <div class="brand-text">StudyBuddy</div>
+      </div>
+
+      <nav class="nav">
+        <a href="dashboard.html" class="nav-item active">
+          <span class="nav-icon">📊</span>Dashboard
+        </a>
+
+        <a href="notes.html" class="nav-item">
+          <span class="nav-icon">📝</span>Notes
+        </a>
+
+        <a href="upload.html" class="nav-item">
+          <span class="nav-icon">📤</span>File Upload
+        </a>
+
+        <a href="quizze.html" class="nav-item">
+          <span class="nav-icon">❓</span>Quizzes
+        </a>
+
+        <a href="flashcard.html" class="nav-item">
+          <span class="nav-icon">🧠</span>Flashcards
+        </a>
+
+        <a href="analytics.html" class="nav-item">
+          <span class="nav-icon">📈</span>Analytics
+        </a>
+
+        <a href="groups.html" class="nav-item">
+          <span class="nav-icon">👥</span>Study Groups
+        </a>
+
+        <a href="assistant.html" class="nav-item">
+          <span class="nav-icon">🤖</span>AI Assistant
+        </a>
+
+        <div class="nav-line"></div>
+
+        <a href="#" class="nav-item">
+          <span class="nav-icon">❔</span>Help
+        </a>
+
+        <button class="nav-item toggle-btn" id="themeToggle">
+          <span class="nav-icon" id="themeIcon">🌙</span>
+          <span id="themeText">Light Mode</span>
+        </button>
+
+        <a href="#" class="nav-item">
+          <span class="nav-icon">⚙️</span>Settings
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        <h1 class="page-title">Dashboard</h1>
+
+        <div class="top-actions">
+          <input class="search" type="text" placeholder="Search notes, flashcards, quizzes..." />
+
+          <button class="icon-btn bell">
+            🔔
+            <span class="badge">2</span>
+          </button>
+
+          <div class="profile">
+            <div class="avatar">J</div>
+            <div class="profile-text">
+              <div class="name">John Doe</div>
+              <div class="role">Student</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard content -->
+      <section class="dashboard-grid">
+        <div class="card stat">
+          <div class="stat-top">
+            <div class="stat-title">Total Notes</div>
+            <div class="chip green">+4</div>
+          </div>
+          <div class="stat-value">26</div>
+          <div class="stat-sub">Last updated today</div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-top">
+            <div class="stat-title">Flashcards</div>
+            <div class="chip blue">+12</div>
+          </div>
+          <div class="stat-value">118</div>
+          <div class="stat-sub">Revision ready</div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-top">
+            <div class="stat-title">Quizzes Completed</div>
+            <div class="chip purple">+2</div>
+          </div>
+          <div class="stat-value">17</div>
+          <div class="stat-sub">Great progress</div>
+        </div>
+
+        <div class="card stat">
+          <div class="stat-top">
+            <div class="stat-title">Study Streak</div>
+            <div class="chip orange">🔥</div>
+          </div>
+          <div class="stat-value">7 days</div>
+          <div class="stat-sub">Keep going!</div>
+        </div>
+      </section>
+
+      <!-- Recent Activity -->
+      <section class="section">
+        <div class="section-head">
+          <h2>Recent Activity</h2>
+          <button class="btn-secondary">View All</button>
+        </div>
+
+        <div class="activity">
+          <div class="activity-item">
+            <div class="dot"></div>
+            <div>
+              <div class="activity-title">Created a new Biology note</div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="dot"></div>
+            <div>
+              <div class="activity-title">Completed Physics Quiz</div>
+              <div class="activity-time">1 day ago</div>
+            </div>
+          </div>
+
+          <div class="activity-item">
+            <div class="dot"></div>
+            <div>
+              <div class="activity-title">Uploaded Chemistry PDF</div>
+              <div class="activity-time">3 days ago</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Floating Chat Button -->
+      <button class="chat-btn">💬</button>
+    </main>
+
+  </div>
+
+  <script>
+    // Theme Toggle (same vibe like your notes page)
+    const themeToggle = document.getElementById("themeToggle");
+    const themeText = document.getElementById("themeText");
+    const themeIcon = document.getElementById("themeIcon");
+
+    // Default: dark theme like screenshot
+    document.body.classList.add("dark");
+
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      const isDark = document.body.classList.contains("dark");
+
+      themeText.textContent = isDark ? "Light Mode" : "Dark Mode";
+      themeIcon.textContent = isDark ? "🌙" : "☀️";
+    });
+  </script>
+</body>
+</html>
