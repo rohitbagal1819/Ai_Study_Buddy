@@ -1,87 +1,69 @@
-/* Upload Zone */
-.upload-zone {
-    background: var(--bg-secondary);
-    border: 3px dashed var(--border-color);
-    border-radius: 20px;
-    padding: 0 40px 80px;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 40px;
-    transition: all 0.3s;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+/* Recent files */
+.page-title{
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
 }
 
-.upload-zone:hover, .upload-zone.drag-over {
-    border-color: var(--accent-color);
-    background: var(--bg-tertiary);
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+.sub-title{
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 6px;
 }
 
-.upload-icon {
-    width: 100px;
-    height: 100px;
-    background: var(--bg-tertiary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 24px;
-    font-size: 48px;
-    transition: all 0.3s;
+.toolbar-left{
+  display:flex;
+  flex-direction:column;
 }
 
-.upload-zone:hover .upload-icon {
-    background: var(--accent-color);
-    transform: scale(1.1);
+.toolbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
 }
 
-.upload-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 12px;
+.drive-btn.danger{
+  background: rgba(229, 62, 62, 0.15);
+  border: 1px solid rgba(229, 62, 62, 0.4);
+  color: #e53e3e;
 }
 
-.upload-description {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
+.folder-bar{
+  margin-top: 18px;
+  padding: 12px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  border-radius: 18px;
 }
 
-.upload-formats {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-top: 16px;
+.folder-chip{
+  padding: 10px 16px;
+  border-radius: 999px;
+  cursor:pointer;
+  border: 1px solid var(--border-color);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 14px;
+  transition: 0.2s;
 }
 
-.file-input {
-    display: none;
+.folder-chip:hover{
+  transform: translateY(-2px);
 }
 
-.upload-progress {
-    display: none;
-    margin-top: 20px;
+.folder-chip.active{
+  background: var(--accent-color);
+  color: white;
+  border-color: rgba(255,255,255,0.2);
 }
 
-.progress-bar {
-    height: 8px;
-    background: var(--border-color);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: 8px;
-}
 
-.progress-fill {
-    height: 100%;
-    background: var(--accent-color);
-    width: 0;
-    transition: width 0.3s;
-}
-
-/* Uploaded Files Section */
-.uploaded-section {
+.drive-section {
     margin-top: 40px;
 }
 
@@ -90,6 +72,7 @@
     font-weight: 700;
     margin-bottom: 24px;
     color: var(--text-primary);
+    
 }
 
 .file-list {
@@ -203,3 +186,260 @@
     transform: scale(1.1);
     box-shadow: 0 8px 24px rgba(0,0,0,0.25);
 }
+
+/* ==============================
+   Drive UI (Folders + Toolbar)
+================================ */
+
+.drive-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 18px 0 10px;
+}
+
+.drive-btn {
+    padding: 10px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.25s;
+}
+
+.drive-btn:hover {
+    transform: translateY(-2px);
+    background: var(--bg-tertiary);
+}
+
+.drive-btn.primary {
+    background: var(--accent-color);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: white;
+}
+
+.breadcrumb {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    padding-left: 4px;
+}
+
+.drive-section {
+    margin-top: 26px;
+}
+
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.folder-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.folder-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+    border-color: var(--accent-color);
+}
+
+.folder-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+    background: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.folder-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.folder-meta {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+}
+
+/* Make top spacing cleaner */
+.header-title{
+  padding-top: 10px;   /* move Study Drive down */
+  font-size: 26px;
+}
+
+/* Clean layout spacing */
+.main-content{
+  padding-top: 18px;
+}
+
+.drive-toolbar{
+  margin-top: 22px;
+}
+
+/* Bigger button */
+.drive-btn.big{
+  padding: 14px 22px;
+  font-size: 16px;
+  border-radius: 16px;
+}
+
+.section-title{
+  margin-top: 24px;
+  margin-bottom: 14px;
+  font-size: 22px;
+}
+
+/* ============ PRO UI POLISH ============ */
+
+/* Better spacing */
+.main-content{
+  padding: 22px 28px;
+}
+
+/* header title area */
+.page-title{
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.sub-title{
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* Toolbar clean */
+.drive-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+/* Buttons modern */
+.drive-btn{
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.drive-btn.primary{
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.18);
+}
+
+/* Folder bar becomes compact + clean */
+.folder-bar{
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.folder-chip{
+  padding: 9px 14px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.folder-chip.active{
+  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.22);
+}
+
+/* Card sections */
+.drive-section{
+  margin-top: 22px;
+}
+
+.section-title{
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 14px;
+  opacity: 0.95;
+}
+
+/* Files list container card */
+.file-list{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+
+/* File item cleaner */
+.file-item{
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: none;
+}
+
+.file-item:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+}
+
+/* File icon more premium */
+.file-icon{
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  font-size: 22px;
+}
+
+/* Name + meta */
+.file-name{
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.file-meta{
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* Action buttons modern */
+.action-btn{
+  width: 42px;
+  height: 42px;
+  border-radius: 14px; /* not circle */
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.action-btn:hover{
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-2px);
+}
+
+.preview-close{
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.preview-close:hover{
+  background: rgba(255,255,255,0.10);
+}
+
+

@@ -1,0 +1,69 @@
+.viewer-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #0f172a;
+}
+
+.viewer-topbar{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px;
+  background: rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.viewer-topbar .left{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+}
+
+.file-name{
+  color: white;
+  font-weight: 700;
+  font-size: 15px;
+  max-width: 60vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v-btn{
+  border:none;
+  cursor:pointer;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.10);
+  color: white;
+  transition: 0.2s;
+}
+
+.v-btn:hover{
+  background: rgba(255,255,255,0.18);
+}
+
+.v-btn.primary{
+  background: #6366f1;
+}
+
+.v-btn.primary:hover{
+  background: #4f46e5;
+}
+
+.viewer-body{
+  flex: 1;
+  padding: 0;
+  background: #111827;
+}
+
+.pdf-frame{
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}

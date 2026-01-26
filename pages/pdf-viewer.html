@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PDF Viewer - StudyBuddy</title>
+
+  <link rel="stylesheet" href="../css/shared-styles.css" />
+  <link rel="stylesheet" href="../css/pdf-viewer.css" />
+</head>
+
+<body>
+  <div class="viewer-container">
+    <div class="viewer-topbar">
+      <div class="left">
+        <button id="backBtn" class="v-btn">← Back</button>
+        <div class="file-name" id="fileName">Loading...</div>
+      </div>
+
+      <div class="right">
+        <button id="downloadBtn" class="v-btn primary">Download</button>
+      </div>
+    </div>
+
+    <div class="viewer-body">
+      <!-- Inbuilt PDF viewer -->
+      <iframe id="pdfFrame" class="pdf-frame"></iframe>
+    </div>
+  </div>
+
+  <script src="../js/pdf-viewer.js"></script>
+</body>
+</html>

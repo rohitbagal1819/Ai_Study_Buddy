@@ -1,108 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyBuddy - File Upload</title>
-    <link rel="stylesheet" href="../css/shared-styles.css">
-    <link rel="stylesheet" href="../css/upload.css">
-    
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyBuddy - File Upload</title>
+  <link rel="stylesheet" href="../css/shared-styles.css" />
+  <link rel="stylesheet" href="../css/upload.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
+
 <body>
-    <div class="container">
-        <aside class="sidebar" id="sidebar"></aside>
-        <main class="main-content">
-            <header class="header">
-                <div class="header-left">
-                    <button class="menu-toggle" id="menuToggle">☰</button>
-                    <div class="header-title">Upload Files</div>
-                </div>
-                <div class="header-right">
-                    <input type="text" class="search-bar" placeholder="Search files...">
-                    <div class="notification-icon">🔔<div class="notification-badge">2</div></div>
-                    <div class="user-profile" id="userProfile">
-                        <div class="user-avatar">JD</div>
-                        <div class="user-info">
-                            <div class="user-name">John Doe</div>
-                            <div class="user-role">Student</div>
-                        </div>
-                        <!-- Profile Popup -->
-                        <div class="profile-popup" id="profilePopup">
-                            <div class="profile-popup-item"><span>⚙️</span><span>Settings</span></div>
-                            <div class="profile-popup-item"><span>📊</span><span>My Progress</span></div>
-                            <div class="profile-popup-item"><span>🎯</span><span>Goals</span></div>
-                            <div class="profile-popup-item logout"><span>🚪</span><span>Logout</span></div>
-                        </div>
-                    </div>
-                </div>
-            </header>
+  <div class="container">
+    <aside class="sidebar" id="sidebar"></aside>
 
-            <!-- Upload Zone -->
-            <div class="upload-zone" id="uploadZone">
-                <input type="file" id="fileInput" class="file-input" multiple accept=".pdf,.png,.jpg,.jpeg,.doc,.docx">
-                <div class="upload-icon">📤</div>
-                <div class="upload-title">Upload your study materials</div>
-                <div class="upload-description">Drag and drop your PDF, images, or documents here, or click to browse</div>
-                <div class="upload-formats">Supported formats: PDF, PNG, JPG, DOC, DOCX (Max 10MB)</div>
-                <div class="upload-progress" id="uploadProgress" style="display: none;">
-                    <div>Uploading...</div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Uploaded Files -->
-            <div class="uploaded-section">
-                <div class="section-title">Uploaded Files</div>
-                <div class="file-list" id="fileList">
-                    <div class="file-item">
-                        <div class="file-icon">📄</div>
-                        <div class="file-info">
-                            <div class="file-name">
-                                Biology_Chapter5.pdf
-                                <span class="check-icon">✓</span>
-                            </div>
-                            <div class="file-meta">
-                                <span>2.4 MB</span>
-                                <span>•</span>
-                                <span>2 hours ago</span>
-                            </div>
-                        </div>
-                        <div class="file-actions">
-                            <button class="action-btn view" title="View">👁️</button>
-                            <button class="action-btn download" title="Download">⬇️</button>
-                            <button class="action-btn delete" title="Delete">🗑️</button>
-                        </div>
-                    </div>
-
-                    <div class="file-item">
-                        <div class="file-icon">📄</div>
-                        <div class="file-info">
-                            <div class="file-name">
-                                Physics_Notes.pdf
-                                <span class="check-icon">✓</span>
-                            </div>
-                            <div class="file-meta">
-                                <span>1.8 MB</span>
-                                <span>•</span>
-                                <span>1 day ago</span>
-                            </div>
-                        </div>
-                        <div class="file-actions">
-                            <button class="action-btn view" title="View">👁️</button>
-                            <button class="action-btn download" title="Download">⬇️</button>
-                            <button class="action-btn delete" title="Delete">🗑️</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="chat-button">💬</div>
+    <main class="main-content">
+      <header class="header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle">☰</button>
+          <div class="header-title">Study Drive</div>
         </div>
-    </div>
 
-    <script src="../js/shared-component.js"></script>
-    <script src="../js/upload-script.js"></script>
+        <div class="header-right">
+          <input type="text" class="search-bar" placeholder="Search files..." />
+          <div class="notification-icon">
+            🔔
+            <div class="notification-badge">2</div>
+          </div>
+
+          <div class="user-profile" id="userProfile">
+            <div class="user-avatar">JD</div>
+            <div class="user-info">
+              <div class="user-name">John Doe</div>
+              <div class="user-role">Student</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Drive Toolbar -->
+      <div class="drive-toolbar">
+        <div class="toolbar-left">
+          <div class="sub-title" id="currentFolderLabel">Create folder for easy access!</div>
+        </div>
+
+        <div class="toolbar-right">
+          <button class="drive-btn primary big" id="newFolderBtn">
+            <i class="fa-solid fa-folder-plus"></i>
+            <span>New Folder</span>
+          </button>
+
+          <button class="drive-btn big" id="renameFolderBtn" style="display:none;">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Rename</span>
+          </button>
+
+          <button class="drive-btn danger big" id="deleteFolderBtn" style="display:none;">
+            <i class="fa-solid fa-trash"></i>
+            <span>Delete</span>
+          </button>
+
+          <button class="drive-btn big" id="uploadToFolderBtn" style="display:none;">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span>Upload</span>
+          </button>
+
+          <input type="file" id="fileInput" hidden multiple
+            accept=".pdf,.ppt,.pptx,.png,.jpg,.jpeg,.doc,.docx" />
+        </div>
+      </div>
+
+      <!-- Folder Names Bar -->
+      <div class="folder-bar" id="folderBar"></div>
+
+      <!-- Folder Files -->
+      <div class="drive-section">
+        <div class="section-title" id="folderFilesTitle">Files</div>
+        <div class="file-list" id="folderFilesList"></div>
+      </div>
+
+      <!-- Recent Files -->
+      <div class="drive-section">
+        <div class="section-title">Recent Files</div>
+        <div class="file-list" id="recentFiles"></div>
+      </div>
+
+      <div class="chat-button">💬</div>
+    </main>
+  </div>
+
+
+
+  <script src="../js/shared-component.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="../js/upload-script.js"></script>
 </body>
+
 </html>
