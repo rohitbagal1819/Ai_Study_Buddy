@@ -35,6 +35,10 @@ function initializeSidebar() {
             <span class="nav-icon">🧠</span>
             <span class="nav-text">Flashcards</span>
         </a>
+        <a href="./timer.html" class="nav-item" data-page="flashcard">
+            <span class="nav-icon">⏱️</span>
+            <span class="nav-text">Timer</span>
+        </a>
         
         <div class="nav-divider"></div>
         

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer - StudyBuddy</title>
+    <link rel="stylesheet" href="../css/shared-styles.css">
+    <link rel="stylesheet" href="../css/timer.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar will be injected here by shared-component.js -->
+        
+        <main class="main-content">
+            <!-- Timer Display - MOVED TO TOP -->
+            <div class="timer-container flip-style" id="timerContainer">
+                <!-- Flip Timer -->
+                <div class="timer-display flip-timer" id="flipTimer">
+                    <!-- Minutes -->
+                    <div class="flip-card-container">
+                        <div class="flip-card" id="minutesTens">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span>0</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card" id="minutesOnes">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span>0</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="separator">:</div>
+                    
+                    <!-- Seconds -->
+                    <div class="flip-card-container">
+                        <div class="flip-card" id="secondsTens">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span>0</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flip-card" id="secondsOnes">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <span>0</span>
+                                </div>
+                                <div class="flip-card-back">
+                                    <span>0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plain Timer -->
+                <div class="timer-display plain-timer" id="plainTimer" style="display: none;">
+                    <div class="plain-time" id="plainTime">00:00</div>
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="timer-controls">
+                    <button class="control-btn start-btn" id="startBtn">
+                        <span class="btn-icon">▶️</span>
+                        <span class="btn-text">Start</span>
+                    </button>
+                    <button class="control-btn pause-btn" id="pauseBtn" disabled>
+                        <span class="btn-icon">⏸️</span>
+                        <span class="btn-text">Pause</span>
+                    </button>
+                    <button class="control-btn reset-btn" id="resetBtn">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Reset</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Compact Options Row -->
+            <div class="compact-options-row">
+                <!-- Theme Selector - COMPACT -->
+                <div class="theme-selector-compact">
+                    <h3>Theme</h3>
+                    <div class="theme-options-compact">
+                        <div class="theme-option-compact active" data-theme="classic" title="Classic">
+                            <div class="theme-preview-compact classic-preview"></div>
+                        </div>
+                        <div class="theme-option-compact" data-theme="ocean" title="Ocean">
+                            <div class="theme-preview-compact ocean-preview"></div>
+                        </div>
+                        <div class="theme-option-compact" data-theme="sunset" title="Sunset">
+                            <div class="theme-preview-compact sunset-preview"></div>
+                        </div>
+                        <div class="theme-option-compact" data-theme="forest" title="Forest">
+                            <div class="theme-preview-compact forest-preview"></div>
+                        </div>
+                        <div class="theme-option-compact" data-theme="neon" title="Neon">
+                            <div class="theme-preview-compact neon-preview"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timer Style Selection - COMPACT -->
+                <div class="timer-style-compact">
+                    <h3>Style</h3>
+                    <div class="style-options-compact">
+                        <div class="style-option-compact active" data-style="flip">
+                            <span class="style-icon-compact">🔄</span>
+                            <span class="style-label-compact">Flip</span>
+                        </div>
+                        <div class="style-option-compact" data-style="plane">
+                            <span class="style-icon-compact">⏱️</span>
+                            <span class="style-label-compact">Plain</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Time Presets -->
+            <div class="quick-presets">
+                <h3>Quick Presets</h3>
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-minutes="25">
+                        <span class="preset-icon">🍅</span>
+                        <span class="preset-label">Pomodoro</span>
+                        <span class="preset-time">25 min</span>
+                    </button>
+                    <button class="preset-btn" data-minutes="5">
+                        <span class="preset-icon">☕</span>
+                        <span class="preset-label">Short Break</span>
+                        <span class="preset-time">5 min</span>
+                    </button>
+                    <button class="preset-btn" data-minutes="15">
+                        <span class="preset-icon">🌟</span>
+                        <span class="preset-label">Long Break</span>
+                        <span class="preset-time">15 min</span>
+                    </button>
+                    <button class="preset-btn" data-minutes="45">
+                        <span class="preset-icon">📚</span>
+                        <span class="preset-label">Deep Focus</span>
+                        <span class="preset-time">45 min</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Timer - AT BOTTOM -->
+            <div class="custom-timer-section">
+                <h3>Custom Timer</h3>
+                <div class="custom-timer-inputs">
+                    <div class="time-input-box">
+                        <label>Minutes</label>
+                        <input type="number" id="customMinutes" min="0" max="99" value="25" placeholder="00">
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-input-box">
+                        <label>Seconds</label>
+                        <input type="number" id="customSeconds" min="0" max="59" value="0" placeholder="00">
+                    </div>
+                    <button class="set-timer-btn" id="setCustomBtn">
+                        <span>⏰</span> Set Timer
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Chat Button -->
+    <div class="chat-button">💬</div>
+
+    <script src="../js/shared-component.js"></script>
+    <script src="../js/timer.js"></script>
+</body>
+</html>
